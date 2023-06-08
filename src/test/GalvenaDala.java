@@ -8,6 +8,7 @@ import javax.swing.*;
 
 public class GalvenaDala {
 	
+	
 	static String izvele(int sk, ArrayList<Jautajumi> jM, ImageIcon a){
 		String[] atb = new String[4];
 		atb[0]=jM.get(sk).getAtb1();
@@ -23,54 +24,67 @@ public class GalvenaDala {
 		return izveletais;
 	}
 	
+	
+	static void punktuSaskaitisana(double p, double n) {
+		if(n>0) {
+			if(n>p) {
+				p=0;
+			}else {
+				p=p-n+(n*0.5);
+			}
+		}
+		JOptionPane.showMessageDialog(null, "punkti: "+p);
+	}
+	
+	
+	static void test(String[] pareizasAtbildes, ArrayList<Jautajumi> jM) {
+		String atbilde=null;
+		double pareizas=0, nepareizas=0;
+		ImageIcon img3 = new ImageIcon("src/Kraine.png");
+		ImageIcon img4 = new ImageIcon("src/Kraine_png4.png");
+		for(int i=0; i<jM.size(); i++) {
+			switch(i) {
+				case 0: case 1: case 4: case 5: case 6: case 7: case 8: case 9: atbilde=izvele(i, jM, null); break;
+				case 2: atbilde=izvele(i, jM, img3); break;
+				case 3: atbilde=izvele(i, jM, img4); break;
+			}
+			if(atbilde==pareizasAtbildes[i]) {
+				JOptionPane.showMessageDialog(null, "Pareizi");
+				pareizas++;
+			}else {
+				JOptionPane.showMessageDialog(null, "Nepareizi");
+				nepareizas++;
+				i--;
+			}
+		}
+		punktuSaskaitisana(pareizas, nepareizas);
+	}
+	
+	
 	public static void main(String[] args) {
+		
 		ArrayList<Jautajumi> jautajumiMasivs = new ArrayList<Jautajumi>();
 		jautajumiMasivs.add(new Jautajumi("Vai var izmantot if bez else?", "Jā", "Nē", "Nezinu", "Visas atbildes ir pareizas"));
 		jautajumiMasivs.add(new Jautajumi("Kur ir komandas, kam vajadzētu notikt,\nja nosacījums ir nepatiess sazarojumā konstrukcijā IF...else?", "Nekur", "Aiz if", "Aiz else", "Aiz switch"));
-		jautajumiMasivs.add(new Jautajumi("Kur ir kļūda?", "Operācijā", "Nosacījumā", "Komandā", "Nav kļūdas"));
-		jautajumiMasivs.add(new Jautajumi("Kur ir kļūda?", "Operācijā", "Nosacījumā", "Komandā", "Nav kļūdas"));
+		jautajumiMasivs.add(new Jautajumi("Kur ir kļūda?", "Trūkst iekavās", "Nosacījumā", "Komandā", "Nav kļūdas"));
+		jautajumiMasivs.add(new Jautajumi("Kur ir kļūda?", "Trūkst iekavās", "Nosacījumā", "Komandā", "Nav kļūdas"));
 		jautajumiMasivs.add(new Jautajumi("Kāds ir paziņojuma if mērķis?", "Mainīgā deklarēšana", "Lai veikt ciklu", "Veikt darbību, pamatojoties uz nosacījumu", "Lai definētu klasi"));
 		jautajumiMasivs.add(new Jautajumi("Kā pareizi jāraksta if...else konstrukciju?", "if(<nosacījums>) <komanda>; else <komanda>;", "if(<nosacījums>) <komanda> else <komanda>", "if(<nosacījums>) <komanda>;", "if(<nosacījums>) <komanda> than else <komanda>;"));
-		jautajumiMasivs.add(new Jautajumi("Kurš no šiem izteikumiem ir derīgs nosacījumam if?", "true && false", "\"Hello\"", "1+2", "10>5 || 7<3"));
+		jautajumiMasivs.add(new Jautajumi("Kurus no šiem nosacījumiem var ierakstīt if konstrukcijā?", "true && false", "\"Hello\"", "1+2", "10>5 || 7<3"));
 		jautajumiMasivs.add(new Jautajumi("Kādu komandu izmanto, lai izlēktu no switch paziņojuma?", "exit", "break", "return", "skip"));
 		jautajumiMasivs.add(new Jautajumi("Kādu komandu izmanto, ja selektora vērtība nesakrīt ne ar vienu no iezīmēm?", "break", "defualt", "defaults", "default"));
 		jautajumiMasivs.add(new Jautajumi("Kur operators ir pareizi pierakstīts?", "if(a*b)", "if(a==1)", "if(b&&f)", "if(\"Hello\")"));
 		String[] pareizasAtbildes = {"Jā", "Aiz else", "Nosacījumā", "Nav kļūdas", "Veikt darbību, pamatojoties uz nosacījumu", "if(<nosacījums>) <komanda>; else <komanda>;", "10>5 || 7<3", "break", "default", "if(a==1)"};
+		
 		JFrame f = new JFrame("Kraine_sazKon");
 		f.setLayout(new FlowLayout()); 
 		JTextArea text = new JTextArea("Sveiki!\nŠeit Jūs varat pārbaudīt savas zināšanas par\nsazarojumas konstrukcijas programmēšanas valodā Java.\nVEIKSMI!", 3, 1);
 		JButton b = new JButton("Uzsakt testu");
+		text.setEditable(false);
 		b.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				int n=0;
-				double p=0;
 				f.setVisible(false);
-				String atb = null;
-				ImageIcon img3 = new ImageIcon("src/Kraine.png");
-				ImageIcon img4 = new ImageIcon("src/Kraine_png4.png");
-				for(int i=0; i<jautajumiMasivs.size(); i++) {
-					switch(i) {
-						case 0: case 1: case 4: case 5: case 6: case 7: case 8: case 9: atb=izvele(i, jautajumiMasivs, null); break;
-						case 2: atb=izvele(i, jautajumiMasivs, img3); break;
-						case 3: atb=izvele(i, jautajumiMasivs, img4); break;
-					}
-					if(atb==pareizasAtbildes[i]) {
-						JOptionPane.showMessageDialog(null, "Pareizi");
-						p++;
-					}else {
-						JOptionPane.showMessageDialog(null, "Nepareizi");
-						n++;
-						i--;
-					}
-				}
-				if(n>0) {
-					if(n>p) {
-						p=0;
-					}else {
-						p=p-n+(n*0.5);
-					}
-				}
-				JOptionPane.showMessageDialog(null, "punkti: "+p);
+				test(pareizasAtbildes, jautajumiMasivs);
 				f.setVisible(true);
 			}
 		});
