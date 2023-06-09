@@ -25,39 +25,35 @@ public class GalvenaDala {
 	}
 	
 	
-	static void punktuSaskaitisana(double p, double n) {
-		if(n>0) {
-			if(n>p) {
-				p=0;
-			}else {
-				p=p-n+(n*0.5);
-			}
-		}
-		JOptionPane.showMessageDialog(null, "punkti: "+p);
-	}
-	
-	
 	static void test(String[] pareizasAtbildes, ArrayList<Jautajumi> jM) {
-		String atbilde=null;
-		double pareizas=0, nepareizas=0;
+		String atbilde = null;
 		ImageIcon img3 = new ImageIcon("src/Kraine.png");
 		ImageIcon img4 = new ImageIcon("src/Kraine_png4.png");
+		ImageIcon imgNO = new ImageIcon("src/no.png");
+		ImageIcon imgYES = new ImageIcon("src/yes.png");
+		int noPirmaReizi = 0;
 		for(int i=0; i<jM.size(); i++) {
-			switch(i) {
+			int meginajumi = 0;
+			boolean vaiIrpareizi = false;
+			while(vaiIrpareizi == false) {
+				switch(i) {
 				case 0: case 1: case 4: case 5: case 6: case 7: case 8: case 9: atbilde=izvele(i, jM, null); break;
 				case 2: atbilde=izvele(i, jM, img3); break;
 				case 3: atbilde=izvele(i, jM, img4); break;
-			}
-			if(atbilde==pareizasAtbildes[i]) {
-				JOptionPane.showMessageDialog(null, "Pareizi");
-				pareizas++;
-			}else {
-				JOptionPane.showMessageDialog(null, "Nepareizi");
-				nepareizas++;
-				i--;
+				}
+				if(atbilde==pareizasAtbildes[i]) {
+					if(meginajumi==0) {
+						noPirmaReizi++;
+					}
+					JOptionPane.showMessageDialog(null, imgYES);
+					vaiIrpareizi=true;
+				}else {
+					JOptionPane.showMessageDialog(null, imgNO);
+					meginajumi++;
+				}
 			}
 		}
-		punktuSaskaitisana(pareizas, nepareizas);
+		JOptionPane.showMessageDialog(null, "Jūsu pareizās atbildes pirmajā mēginājumā: "+noPirmaReizi);
 	}
 	
 	
